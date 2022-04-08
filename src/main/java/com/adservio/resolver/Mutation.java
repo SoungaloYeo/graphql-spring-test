@@ -4,9 +4,10 @@ import com.adservio.domain.Skill;
 import com.adservio.domain.Talent;
 import com.adservio.repository.SkillRepository;
 import com.adservio.repository.TalentRepository;
+import com.adservio.resolver.exceptions.SkillNotFoundException;
+import com.adservio.resolver.exceptions.TalentNotFoundException;
 import graphql.kickstart.tools.GraphQLMutationResolver;
 
-import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
 import java.util.Optional;
 
@@ -20,19 +21,23 @@ public class Mutation implements GraphQLMutationResolver {
         this.skillRepository = skillRepository;
     }
 
-    public Talent newTalent(String firstname, String lastname, String skillId) {
+    public Talent newTalent(String firstname, String lastname, Long skillId) {
 
-        var talent = Talent.builder()
-                .firstname(firstname)
-                .lastname(lastname)
-                .startDate(LocalDate.now().toString())
-                .skill(Skill.builder().id(1L)
-                .build())
-                .build();
+        if(!this.skillRepository.existsById(skillId)) {
+            throw new SkillNotFoundException("make sure you enter right skillId", skillId);
+        } else {
+            var talent = Talent.builder()
+                    .firstname(firstname)
+                    .lastname(lastname)
+                    .startDate(LocalDate.now().toString())
+                    .skill(Skill.builder().id(skillId)
+                            .build())
+                    .build();
 
-        talentRepository.save(talent);
+            talentRepository.save(talent);
 
-        return talent;
+            return talent;
+        }
     }
 
     public Skill newSkill(String designation) {
@@ -52,7 +57,7 @@ public class Mutation implements GraphQLMutationResolver {
     public Talent updateTalent(String firstname, String lastname, Long id) {
 
         var talent = talentRepository.findById(id)
-                .orElseThrow(EntityNotFoundException::new);
+                .orElseThrow(() -> new TalentNotFoundException("talent id not exist", id));
 
         Optional.ofNullable(firstname).ifPresent(talent::setFirstname);
         Optional.ofNullable(lastname).ifPresent(talent::setLastname);
