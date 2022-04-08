@@ -155,6 +155,3 @@ logging:
   level:
     org.hibernate.SQL: WARN
 ```
-
-- change libraries
-- add more implementation
