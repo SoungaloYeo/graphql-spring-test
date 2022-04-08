@@ -1,0 +1,13 @@
+type Skill {
+    id: ID!
+    designation: String!
+}
+
+type Query {
+    findAllSkills: [Skill]!
+    countSkills: Int!
+}
+
+type Mutation {
+    newSkill(designation: String!) : Skill!
+}

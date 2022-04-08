@@ -1,14 +1,16 @@
 package com.adservio;
 
+import com.adservio.domain.Skill;
 import com.adservio.domain.Talent;
-import com.adservio.service.TalentService;
-import org.springframework.boot.ApplicationRunner;
+import com.adservio.repository.SkillRepository;
+import com.adservio.repository.TalentRepository;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import java.time.LocalDate;
-import java.util.stream.Stream;
+import java.util.UUID;
 
 @SpringBootApplication
 public class DemoGraphQlApplication {
@@ -18,15 +20,25 @@ public class DemoGraphQlApplication {
     }
 
     @Bean
-    ApplicationRunner init(TalentService talentService) {
-        return args -> Stream.of("YEO;Soungalo", "ADDIA;Youssouf", "ASSI;Jean-Luc").forEach(couple -> {
-            Talent talent = Talent.builder()
-                    .firstname(couple.split(";")[0])
-                    .lastname(couple.split(";")[1])
-                    .startDate(LocalDate.now()).build();
-            talentService.saveTalent(talent);
-        });
+    public CommandLineRunner init(TalentRepository talentRepository, SkillRepository skillRepository) {
+        return (args) -> {
+            var skill1 = skillRepository.saveAndFlush(Skill.builder().designation("JAVA/JEE").build());
+            var skill2 = skillRepository.saveAndFlush(Skill.builder().designation("ANGULAR").build());
 
+            talentRepository.save(Talent.builder()
+                    .firstname("Soungalo")
+                    .lastname("YEO")
+                    .startDate(LocalDate.now().toString())
+                    .skill(skill1)
+                    .build());
+
+            talentRepository.save(Talent.builder()
+                    .firstname("Maxime")
+                    .lastname("BROU")
+                    .startDate(LocalDate.now().toString())
+                    .skill(skill2)
+                    .build());
+        };
     }
 
 }

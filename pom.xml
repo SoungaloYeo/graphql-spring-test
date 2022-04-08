@@ -14,46 +14,9 @@
 	<name>demo-graph-ql</name>
 	<description>Demo project for Spring Boot + using graph ql</description>
 	<properties>
+		<graphql.spring.starter.version>11.1.0</graphql.spring.starter.version>
 		<java.version>11</java.version>
 	</properties>
-	<dependencies>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-rest</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-
-		<!-- graphQl dependence -->
-		<dependency>
-			<groupId>io.leangen.graphql</groupId>
-			<artifactId>graphql-spqr-spring-boot-starter</artifactId>
-			<version>0.0.4</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
-
 	<build>
 		<defaultGoal>spring-boot:run</defaultGoal>
 		<plugins>
@@ -71,5 +34,68 @@
 			</plugin>
 		</plugins>
 	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-rest</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<!-- START graphQl dependencies -->
+		<dependency>
+			<groupId>com.graphql-java-kickstart</groupId>
+			<artifactId>graphql-spring-boot-starter</artifactId>
+			<version>${graphql.spring.starter.version}</version>
+		</dependency>
+		<dependency> <!-- to embed GraphiQL tool.  See http://localhost:8080/graphiql -->
+			<groupId>com.graphql-java-kickstart</groupId>
+			<artifactId>graphiql-spring-boot-starter</artifactId>
+			<version>${graphql.spring.starter.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency> <!-- See http://localhost:8080/altair -->
+			<groupId>com.graphql-java-kickstart</groupId>
+			<artifactId>altair-spring-boot-starter</artifactId>
+			<version>${graphql.spring.starter.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency> <!-- See http://localhost:8080/playground -->
+			<groupId>com.graphql-java-kickstart</groupId>
+			<artifactId>playground-spring-boot-starter</artifactId>
+			<version>${graphql.spring.starter.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency> <!-- See http://localhost:8080/voyager -->
+			<groupId>com.graphql-java-kickstart</groupId>
+			<artifactId>voyager-spring-boot-starter</artifactId>
+			<version>${graphql.spring.starter.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<!-- END graphQl dependencies -->
+
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
 
 </project>

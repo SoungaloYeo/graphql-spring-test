@@ -1,0 +1,18 @@
+type Talent {
+    id: ID!
+    firstname: String!
+    lastname: String!
+    startDate: String!
+    skill: Skill
+}
+
+extend type Query {
+    findAllTalents: [Talent]!
+    countTalents: Int!
+}
+
+extend type Mutation {
+    newTalent(firstname: String!, lastname: String! skill: ID!) : Talent!
+    deleteTalent(id: ID!) : Boolean
+    updateTalent(firstname: String!, lastname: String!, id: ID!) : Talent!
+}

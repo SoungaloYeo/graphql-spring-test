@@ -1,11 +1,8 @@
 package com.adservio.domain;
 
-import io.leangen.graphql.annotations.GraphQLQuery;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Getter
@@ -18,13 +15,13 @@ import java.time.LocalDate;
 public class Talent {
 
     @Id
-    @GeneratedValue
-    @GraphQLQuery(name = "id", description = "Talent's id")
+    @Column(name="talent_id")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
-    @GraphQLQuery(name = "firstname", description = "Talent's firstname")
     private String firstname;
-    @GraphQLQuery(name = "lastname", description = "Talent's lastname")
     private String lastname;
-    private LocalDate startDate;
-
+    private String startDate = LocalDate.now().toString();
+    @ManyToOne
+    @JoinColumn(name = "skill_id", nullable = false, updatable = false)
+    private Skill skill;
 }
